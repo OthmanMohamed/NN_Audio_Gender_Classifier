@@ -1,0 +1,20 @@
+{
+    "out_path": "out/",
+    "mfccs_path": "/data/datasets/mfccs",
+    "TIMIT_path" : "/data/datasets/archive",
+    "LIBRI_path" : "/data/datasets/train-clean-100/LibriSpeech",
+    "SR" : 16000,
+    "n_mfccs" : 20,
+    "max_mfcc_len" : 250,
+    "batch_size": 64,
+    "data_shuffle": true,
+    "train_percent": 0.8,
+    "test_percent": 0.1,
+    "val_percent": 0.1,
+    "network_type": "RNN",
+    "learning_rate": 0.001,
+    "max_epochs": 50,
+    "log_interval": 10,
+    "save_checkpoint_path" : "out/",
+    "save_checkpoint_interval" : 200
+}
