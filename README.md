@@ -22,25 +22,25 @@ It is expected for the paths to be passed to be structured as follow
     .
     ├── ...
     └─archive			##TIMIT_path                  
-   	├── PHONCODE.DOC
-   	├── PROMPTS.TXT
-   	├── README.DOC
-   	├── SPKRINFO.TXT
-   	├── SPKRSENT.TXT
-   	├── test_data.csv
-   	├── TESTSET.DOC
-   	├── TIMITDIC.DOC
-   	├── TIMITDIC.TXT
-   	├── train_data.csv
-   	└── data
-	   ├── TEST
-	   └── TRAIN
+		├── PHONCODE.DOC
+		├── PROMPTS.TXT
+		├── README.DOC
+		├── SPKRINFO.TXT
+		├── SPKRSENT.TXT
+		├── test_data.csv
+		├── TESTSET.DOC
+		├── TIMITDIC.DOC
+		├── TIMITDIC.TXT
+		├── train_data.csv
+		└── data
+			   ├── TEST
+			   └── TRAIN
      ...
     .
     └─── LibriSpeech		#LibriSpeech Path          
-	├──BOOKS.TXT
-	├──CHAPTERS.TXT
-	├──LICENSE.TXT
-	├──README.TXT
-	├──SPEAKERS.TXT
-	└──train-clean-100 ...
+		├──BOOKS.TXT
+		├──CHAPTERS.TXT
+		├──LICENSE.TXT
+		├──README.TXT
+		├──SPEAKERS.TXT
+		└──train-clean-100 ...
