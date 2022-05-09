@@ -4,12 +4,16 @@ import random
 import pickle
 import numpy as np
 import torch
+import json
 
-max_mfcc_len = 250
-mfccs_path = "/data/datasets/mfccs"
-train_percent = 0.8
-test_percent = 0.1
-val_percent = 0.1
+f = open("config.json")
+config = json.load(f)
+f.close()
+max_mfcc_len = config['max_mfcc_len']
+mfccs_path = config['mfccs_path']
+train_percent = config['train_percent']
+test_percent = config['test_percent']
+val_percent = config['val_percent']
 
 class mfcc_ds(Dataset):
 

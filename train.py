@@ -16,10 +16,6 @@ f = open("config.json")
 config = json.load(f)
 f.close()
 
-out_path = "out/"
-if not os.path.isdir(out_path): os.mkdir(out_path)
-out_path = os.path.join(out_path, today)
-if not os.path.isdir(out_path): os.mkdir(out_path)
 n_mfccs = config['n_mfccs']
 mfccs_path = config['mfccs_path']
 batch_size = config['batch_size']
@@ -33,6 +29,10 @@ max_epochs = config['max_epochs']
 log_interval = config['log_interval']
 save_checkpoint_path  = config["save_checkpoint_path"]
 save_checkpoint_interval = config["save_checkpoint_interval"]
+out_path = "out/"
+if not os.path.isdir(out_path): os.mkdir(out_path)
+out_path = os.path.join(out_path, network_type + "_" + today)
+if not os.path.isdir(out_path): os.mkdir(out_path)
 
 
 lbls_file_path = os.path.join(mfccs_path, "lbls.pkl")

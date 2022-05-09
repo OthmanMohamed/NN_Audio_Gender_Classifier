@@ -14,24 +14,15 @@ batch_size = config['batch_size']
 class GenderClassifier_RNN(nn.Module):
     def __init__(self):
         super(GenderClassifier_RNN, self).__init__()    
-        self.LSTM1 = nn.LSTM(n_mfccs, n_mfccs, num_layers=1, batch_first=True)
-        self.LSTM2 = nn.LSTM(n_mfccs, int(n_mfccs * (3/4)), num_layers=1, batch_first=True)
-        self.LSTM3 = nn.LSTM(int(n_mfccs * (3/4)), int(n_mfccs * (1/2)), num_layers=1, batch_first=True)
-        # for name, param in self.LSTM.named_parameters():
-        #     if 'bias' in name:
-        #         nn.init.constant_(param, 0.0)
-        #     elif 'weight' in name:
-        #         nn.init.xavier_normal_(param)
-        self.Linear = nn.Linear(int(n_mfccs * (1/2)), 1)
+        self.LSTM1 = nn.LSTM(n_mfccs, 2 * n_mfccs, num_layers=3, batch_first=True)
+        self.Linear = nn.Linear(2* int(n_mfccs), 1)
         
     def forward(self, x):
         x, _ = self.LSTM1(x.float())
-        x, _ = self.LSTM2(x.float())
-        x, _ = self.LSTM3(x.float())
-        # x = F.relu(self.Linear1(h_n[-1].float()))
         x =  F.relu(self.Linear(x[:,x.size(1)-1]))
         x = torch.sigmoid(x)
         return x
+
 
 
 class GenderClassifier_CNN(nn.Module):
