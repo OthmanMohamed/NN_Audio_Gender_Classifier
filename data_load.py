@@ -6,6 +6,7 @@ import numpy as np
 import torch
 import json
 
+# LOADING CONFIGURATIONS
 f = open("config.json")
 config = json.load(f)
 f.close()
@@ -14,6 +15,7 @@ mfccs_path = config['mfccs_path']
 train_percent = config['train_percent']
 test_percent = config['test_percent']
 val_percent = config['val_percent']
+hp_shuffle_ds = config['data_shuffle']
 
 class mfcc_ds(Dataset):
 
@@ -21,7 +23,6 @@ class mfcc_ds(Dataset):
     self.train_list = train_list
     with open(lbls_path, 'rb') as f:
         self.lbls_dict = pickle.load(f)
-    hp_shuffle_ds = True
     if hp_shuffle_ds: 
         random.shuffle(self.train_list)
         
@@ -29,12 +30,12 @@ class mfcc_ds(Dataset):
     return len(self.train_list)
 
   def __getitem__(self, idx):
-    mfcc = np.load(self.train_list[idx])
+    mfcc = np.load(self.train_list[idx]) #loading mfcc numpy file
     label = self.lbls_dict[self.train_list[idx]]
     if mfcc.shape[1] < max_mfcc_len:
-        mfcc = np.pad(mfcc, ((0,0),(0, max_mfcc_len - mfcc.shape[1])))
+        mfcc = np.pad(mfcc, ((0,0),(0, max_mfcc_len - mfcc.shape[1]))) #pad if less than max len
     else:
-        mfcc = mfcc[:, :max_mfcc_len]
+        mfcc = mfcc[:, :max_mfcc_len] #truncate at length equal max len
     return torch.Tensor(mfcc), torch.Tensor([label])
 
 

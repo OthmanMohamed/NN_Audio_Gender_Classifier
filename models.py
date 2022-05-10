@@ -4,6 +4,7 @@ import torch.nn.functional as F
 import numpy as np
 import json 
 
+# LOADING CONFIGURATIONS
 f = open("config.json")
 config = json.load(f)
 f.close()
@@ -11,6 +12,7 @@ n_mfccs = config['n_mfccs']
 max_mfcc_len = config['max_mfcc_len']
 batch_size = config['batch_size']
 
+# LSTM MODEL
 class GenderClassifier_RNN(nn.Module):
     def __init__(self):
         super(GenderClassifier_RNN, self).__init__()    
@@ -23,8 +25,7 @@ class GenderClassifier_RNN(nn.Module):
         x = torch.sigmoid(x)
         return x
 
-
-
+# CNN MODEL
 class GenderClassifier_CNN(nn.Module):
     def __init__(self):
         super(GenderClassifier_CNN, self).__init__()

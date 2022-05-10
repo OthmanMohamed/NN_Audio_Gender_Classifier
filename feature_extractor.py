@@ -7,6 +7,7 @@ from tqdm import tqdm
 import pickle
 import json
 
+# LOADING CONFIGURATIONS
 f = open("config.json")
 config = json.load(f)
 f.close()
@@ -18,6 +19,7 @@ SR = config['SR']
 n_mfccs = config['n_mfccs']
 max_mfcc_len = config['max_mfcc_len']
 
+# INITIALIZE NEEDED LISTS
 wav_files_male_train_timit = []
 wav_files_female_train_timit = []
 wav_files_male_test_timit = []
@@ -25,10 +27,12 @@ wav_files_female_test_timit = []
 wav_files_male_libri = []
 wav_files_female_libri = []
 
+# PROCESS TIMIT TRAIN SUBSET
 path = os.path.join(TIMIT_path, "TRAIN")
 for DR in os.listdir(path):
     DR_dir = os.path.join(path, DR)
     for speaker_dir in os.listdir(DR_dir):
+        # add the wav path to the required list
         if speaker_dir[0] == 'F':
             speaker_dir = os.path.join(DR_dir, speaker_dir)
             wav_files_female_train_timit.extend([x for x in glob.glob(os.path.join(speaker_dir, "*.wav")) if 'wav' in x])
@@ -36,10 +40,12 @@ for DR in os.listdir(path):
             speaker_dir = os.path.join(DR_dir, speaker_dir)
             wav_files_male_train_timit.extend([x for x in glob.glob(os.path.join(speaker_dir, "*.wav")) if 'wav' in x])
 
+# PROCESS TIMIT TEST SUBSET
 path = os.path.join(TIMIT_path, "TEST")
 for DR in os.listdir(path):
     DR_dir = os.path.join(path, DR)
     for speaker_dir in os.listdir(DR_dir):
+        # add the wav path to the required list
         if speaker_dir[0] == 'F':
             speaker_dir = os.path.join(DR_dir, speaker_dir)
             wav_files_female_test_timit.extend([x for x in glob.glob(os.path.join(speaker_dir, "*.wav")) if 'wav' in x])
@@ -50,6 +56,7 @@ for DR in os.listdir(path):
 wav_files_male_full_timit = wav_files_male_test_timit + wav_files_male_train_timit
 wav_files_female_full_timit = wav_files_female_test_timit + wav_files_female_train_timit
 
+# READ LIBRISPEECH SPEAKERS INFO FILE TO GET GENDER LABELS
 f = open(os.path.join(LIBRI_path, "SPEAKERS.TXT"), "r")
 lines = f.readlines()
 Libri_speakers_dict = dict()
@@ -58,13 +65,17 @@ for l in lines:
         split_line = l.replace(' ', '').split('|')
         Libri_speakers_dict[split_line[0]] = split_line[1]
 
+# PROCESS LIBRISPEECH DATA
 path = os.path.join(LIBRI_path, "train-clean-100")
 for speaker_dir in os.listdir(path):
     speaker_files = []
     speaker_dir = os.path.join(path, speaker_dir)
+    #loop over books directories
     for book_dir in os.listdir(speaker_dir):
         book_dir = os.path.join(speaker_dir, book_dir)
+        # add book files to speaker files list
         speaker_files += glob.glob(os.path.join(book_dir, "*.flac"))
+    # get 10 random files for each speaker
     speaker_subset = random.sample(speaker_files, 10)
     speaker_id = os.path.basename(speaker_subset[0]).split('-')[0]
     if Libri_speakers_dict[speaker_id] == 'F':
@@ -75,12 +86,14 @@ for speaker_dir in os.listdir(path):
 wav_files_male_full = wav_files_male_full_timit + wav_files_male_libri
 wav_files_female_full = wav_files_female_full_timit + wav_files_female_libri
 wav_files_full = []
+# create full files list, with gender labels (0 for male and 1 for female)
 for w in wav_files_female_full:
     wav_files_full.append((w, 1))
 for w in wav_files_male_full:
     wav_files_full.append((w, 0))
 random.shuffle(wav_files_full)  
 
+# SAVE OUTPUT TO MFCC PATH
 if not os.path.isdir(mfccs_path): os.mkdir(mfccs_path)
 labels_dict = dict()
 max_len = 0
@@ -99,6 +112,7 @@ for i, w in enumerate(tqdm(wav_files_full)):
 print("MAX FILE DURATION : ", max_duration, " SEC")
 print("MAX MFCC LEN : ", max_len)
 
+# SAVE LABELS FILE, WITH FILE NAME AND GENDER LABEL
 lbls_file_path = os.path.join(mfccs_path, "lbls.pkl")
 lbls_file = open(lbls_file_path, "wb")
 pickle.dump(labels_dict, lbls_file)
