@@ -35,16 +35,17 @@ test_loader = DataLoader(ds_test, batch_size=batch_size, shuffle=False)
 #LOADING THE MODEL
 model = torch.load(test_model_path)
 model.eval()
-print(model)
 pred = torch.Tensor()
 ground_truth = torch.Tensor()
 
 #TEST LOOP
 for batch_id, (mfccs, lbls) in enumerate(test_loader):
+    print(mfccs.shape)
     if network_type == "RNN":
         mfccs = torch.reshape(mfccs, (mfccs.shape[0], -1, n_mfccs))
     elif network_type == "CNN":
         mfccs = torch.reshape(mfccs, (mfccs.shape[0], 1, -1, n_mfccs))
+    print(mfccs.shape)
     outputs = model(mfccs)
     predicted = torch.gt(outputs, 0.5)
     pred = torch.cat((pred, predicted))

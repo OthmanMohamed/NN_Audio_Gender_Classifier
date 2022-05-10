@@ -4,6 +4,7 @@
     "TIMIT_path" : "/data/datasets/archive",
     "LIBRI_path" : "/data/datasets/train-clean-100/LibriSpeech",
     "test_model_path" : "/data/gender_classifier/out/CNN_model_3800Steps.pt",
+    "infer_model_path" : "/data/gender_classifier/out/CNN_model_3800Steps.pt",
     "SR" : 16000,
     "n_mfccs" : 20,
     "max_mfcc_len" : 250,
