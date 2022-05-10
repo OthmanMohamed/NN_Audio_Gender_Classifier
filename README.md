@@ -81,3 +81,10 @@ Output to monitor losses and accuracies will be written in the terminal, and a t
 ## Evaluating The Network
 you can run `python evaluate.py` to evaluate and calculate the prediction metrics for the model on test set. <br />
 To evaluate a model, specify the "test_model_path" and "network_type" in the `config.json`. The test model path is the path of the model to load and run testing with
+
+## Using network to predict audio file gender
+you can use a checkpoint of a trained model to genrate prediction for a file by running the command <br />
+`python infer.py <audio file path>`
+##### example:
+`python infer.py /data/test_wavs/out.wav`
+You have to specify the inference model path in the config.json file
