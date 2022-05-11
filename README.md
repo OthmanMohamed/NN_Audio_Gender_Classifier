@@ -85,6 +85,8 @@ To evaluate a model, specify the "test_model_path" and "network_type" in the `co
 ## Using network to predict audio file gender
 you can use a checkpoint of a trained model to genrate prediction for a file by running the command <br />
 `python infer.py <audio file path>`
-##### example:
-`python infer.py /data/test_wavs/out.wav`
+#### example:
+`python infer.py /data/test_wavs/out.wav` <br />
 You have to specify the inference model path in the config.json file
+you can download the best performing model from this link "https://drive.google.com/file/d/1cMynQeKceuEMHVZRf7CV2t_1cjr0cCHB/view?usp=sharing" <br />
+Then modify the config file, with the model path and "network_type" set to "CNN" before running the script
